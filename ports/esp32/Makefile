@@ -357,6 +357,9 @@ SRC_C = \
 	$(wildcard $(BOARD_DIR)/*.c) \
 	$(SRC_MOD)
 
+SRC_CPP = \
+	$(SRC_MOD_CPP)
+
 EXTMOD_SRC_C += $(addprefix extmod/,\
 	modonewire.c \
 	)
@@ -378,6 +381,7 @@ DRIVERS_SRC_C = $(addprefix drivers/,\
 OBJ_MP =
 OBJ_MP += $(PY_O)
 OBJ_MP += $(addprefix $(BUILD)/, $(SRC_C:.c=.o))
+OBJ_MP += $(addprefix $(BUILD)/, $(SRC_CPP:.cpp=.o))
 OBJ_MP += $(addprefix $(BUILD)/, $(EXTMOD_SRC_C:.c=.o))
 OBJ_MP += $(addprefix $(BUILD)/, $(LIB_SRC_C:.c=.o))
 OBJ_MP += $(addprefix $(BUILD)/, $(DRIVERS_SRC_C:.c=.o))

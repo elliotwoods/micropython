@@ -33,6 +33,7 @@ ifneq ($(USER_C_MODULES),)
 # pre-define USERMOD variables as expanded so that variables are immediate
 # expanded as they're added to them
 SRC_USERMOD :=
+SRC_USERMOD_CPP :=
 CFLAGS_USERMOD :=
 LDFLAGS_USERMOD :=
 $(foreach module, $(wildcard $(USER_C_MODULES)/*/micropython.mk), \
@@ -42,6 +43,7 @@ $(foreach module, $(wildcard $(USER_C_MODULES)/*/micropython.mk), \
 )
 
 SRC_MOD += $(patsubst $(USER_C_MODULES)/%.c,%.c,$(SRC_USERMOD))
+SRC_MOD_CPP += $(patsubst $(USER_C_MODULES)/%.cpp,%.cpp,$(SRC_USERMOD_CPP))
 CFLAGS_MOD += $(CFLAGS_USERMOD)
 LDFLAGS_MOD += $(LDFLAGS_USERMOD)
 endif
