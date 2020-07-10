@@ -76,13 +76,29 @@ MP_DEFINE_CONST_FUN_OBJ_1(mp_model_get_output_size_obj,
 STATIC mp_obj_t mp_model_invoke(mp_obj_t self_in, mp_obj_t input_obj)
 {
 	model_t *self = MP_OBJ_TO_PTR(self_in);
-	float input = mp_obj_get_float(input_obj);
 
-	model_get_input(self->model)[0] = input;
-	model_invoke(self->model);
-	float result = model_get_output(self->model)[0];
+	size_t inputLength;
+	mp_obj_t * inputItems;
+	mp_obj_list_get(input_obj, &inputLength, &inputItems);
+	float * inputTensorData = model_get_input(self->model);
+	for(size_t i=0; i<inputLength; i++) {
+		inputTensorData[i] = mp_obj_get_float(inputItems[i]);
+	}
 
-	return mp_obj_new_float(result);
+	// invoke
+	if(!model_invoke(self->model)) {
+		nlr_raise(mp_obj_new_exception_msg(&mp_type_Exception, MP_ERROR_TEXT("Model failed to invoke")));
+	}
+
+	// build output
+	size_t outputLength = model_get_output_size(self->model);
+	mp_obj_t outputItems[outputLength];
+	float * outputTensorData = model_get_output(self->model);
+	for(size_t i=0; i<outputLength; i++) {
+		outputItems[i] = mp_obj_new_float(outputTensorData[i]);
+	}
+
+	return mp_obj_new_list(outputLength, outputItems);
 }
 MP_DEFINE_CONST_FUN_OBJ_2(mp_model_invoke_obj,
 	mp_model_invoke);
