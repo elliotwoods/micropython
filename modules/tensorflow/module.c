@@ -53,6 +53,33 @@ STATIC void mp_model_print( const mp_print_t *print,
 }
 
 //----------
+STATIC mp_obj_t mp_model_load(mp_obj_t self_in, mp_obj_t data_in)
+{
+	model_t *self = MP_OBJ_TO_PTR(self_in);
+
+	size_t dataLength;
+	const char * data = mp_obj_str_get_data(data_in, &dataLength);
+
+	model_load(self->model, data, dataLength);
+
+	return mp_const_none;
+}
+MP_DEFINE_CONST_FUN_OBJ_2(mp_model_load_obj,
+	mp_model_load);
+
+//----------
+STATIC mp_obj_t mp_model_unload(mp_obj_t self_in)
+{
+	model_t *self = MP_OBJ_TO_PTR(self_in);
+
+	model_unload(self->model);
+
+	return mp_const_none;
+}
+MP_DEFINE_CONST_FUN_OBJ_1(mp_model_unload_obj,
+	mp_model_unload);
+
+//----------
 STATIC mp_obj_t mp_model_get_input_size(mp_obj_t self_in)
 {
 	model_t *self = MP_OBJ_TO_PTR(self_in);
@@ -76,6 +103,10 @@ MP_DEFINE_CONST_FUN_OBJ_1(mp_model_get_output_size_obj,
 STATIC mp_obj_t mp_model_invoke(mp_obj_t self_in, mp_obj_t input_obj)
 {
 	model_t *self = MP_OBJ_TO_PTR(self_in);
+
+	if(!model_is_loaded(self->model)) {
+		nlr_raise(mp_obj_new_exception_msg(&mp_type_Exception, MP_ERROR_TEXT("Model is not loaded")));
+	}
 
 	size_t inputLength;
 	mp_obj_t * inputItems;
@@ -109,6 +140,9 @@ STATIC const mp_rom_map_elem_t model_locals_dict_table[] = {
 	{ MP_ROM_QSTR(MP_QSTR_invoke), MP_ROM_PTR(&mp_model_invoke_obj) }, 
 	{ MP_ROM_QSTR(MP_QSTR_get_input_size), MP_ROM_PTR(&mp_model_get_input_size_obj) }, 
 	{ MP_ROM_QSTR(MP_QSTR_get_output_size), MP_ROM_PTR(&mp_model_get_output_size_obj) }, 
+	{ MP_ROM_QSTR(MP_QSTR_load), MP_ROM_PTR(&mp_model_load_obj) }, 
+	{ MP_ROM_QSTR(MP_QSTR_unload), MP_ROM_PTR(&mp_model_unload_obj) }, 
+	
 };
 STATIC MP_DEFINE_CONST_DICT(model_locals_dict,
 							model_locals_dict_table);
@@ -128,12 +162,23 @@ const mp_obj_type_t mp_model_type = {
 };
 
 
+//----------
+STATIC mp_obj_t mp_get_sine_model()
+{
+	size_t dataLength;
+	const char * data = get_sine_model(&dataLength);
+	return mp_obj_new_str(data, dataLength);
+}
+MP_DEFINE_CONST_FUN_OBJ_0(mp_get_sine_model_obj,
+	mp_get_sine_model);
+
 
 // Module definition
 
 STATIC const mp_rom_map_elem_t tensorflow_module_globals_table[] = {
 	{ MP_ROM_QSTR(MP_QSTR__name__), MP_ROM_QSTR(MP_QSTR_tensorflow)},
 	{ MP_ROM_QSTR(MP_QSTR_testInvoke), MP_ROM_PTR(&tf_invoke_obj)},
+	{ MP_ROM_QSTR(MP_QSTR_get_sine_model), MP_ROM_PTR(&mp_get_sine_model_obj)},
 	{ MP_ROM_QSTR(MP_QSTR_Model), MP_ROM_PTR(&mp_model_type)}
 };
 STATIC MP_DEFINE_CONST_DICT(tensorflow_module_globals, tensorflow_module_globals_table);

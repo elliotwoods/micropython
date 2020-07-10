@@ -23,11 +23,11 @@ Model::~Model()
 
 //----------
 void
-Model::load(unsigned char * data, size_t length)
+Model::load(const char * data, size_t length)
 {
 	this->unload();
 
-	this->model = ::tflite::GetModel(g_model);
+	this->model = ::tflite::GetModel(data);
 	if (this->model->version() != TFLITE_SCHEMA_VERSION) {
 	TF_LITE_REPORT_ERROR(error_reporter,
 		"Model provided is schema version %d not equal "

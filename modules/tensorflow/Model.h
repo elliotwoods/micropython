@@ -10,7 +10,7 @@ public:
 	Model(size_t tensorArenaSize = 2 * 1024);
 	~Model();
 
-	void load(unsigned char * data, size_t length);
+	void load(const char * data, size_t length);
 	void unload();
 	
 	bool isLoaded() const;
@@ -21,7 +21,7 @@ public:
 	size_t getInputSize() const;
 	size_t getOutputSize() const;
 	bool checkSize(size_t inputSize, size_t outputSize) const;
-	
+
 	bool invoke();
 
 protected:

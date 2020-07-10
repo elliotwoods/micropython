@@ -1,5 +1,6 @@
 #include "extern.h"
 #include "Model.h"
+#include "sine_model.h"
 
 #include <vector>
 
@@ -20,9 +21,7 @@ float testInvoke(float input) {
 }
 
 model_handle create_model() {
-
 	auto newModel = new Model;
-	newModel->load(nullptr, 0);
 
 	auto nextIndex = models.size();
 	models.push_back(newModel);
@@ -31,6 +30,18 @@ model_handle create_model() {
 
 void delete_model(model_handle model) {
 	delete models[model];
+}
+
+void model_load(model_handle model, const char * data, size_t length) {
+	models[model]->load(data, length);
+}
+
+void model_unload(model_handle model) {
+	models[model]->unload();
+}
+
+bool model_is_loaded(model_handle model) {
+	return models[model]->isLoaded();
 }
 
 float * model_get_input(model_handle model) {
@@ -55,4 +66,9 @@ size_t model_get_input_size(model_handle model) {
 
 size_t model_get_output_size(model_handle model) {
 	return models[model]->getOutputSize();
+}
+
+const char * get_sine_model(size_t * length) {
+	* length = (size_t) g_model_len;
+	return (const char *) g_model;
 }
