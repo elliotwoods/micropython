@@ -15,7 +15,15 @@ public:
 	
 	bool isLoaded() const;
 
-	float invoke(float);
+	float * getInput();
+	float * getOutput();
+
+	size_t getInputSize() const;
+	size_t getOutputSize() const;
+	bool checkSize(size_t inputSize, size_t outputSize) const;
+	
+	bool invoke();
+
 protected:
 	size_t tensorArenaSize;
 	uint8_t * tensorArena;

@@ -8,19 +8,23 @@ tflite::AllOpsResolver resolver;
 
 //----------
 Model::Model(size_t tensorArenaSize)
-: tensorArenaSize(tensorArenaSize) {
+: tensorArenaSize(tensorArenaSize)
+{
 	this->tensorArena = new uint8_t[tensorArenaSize];
 }
 
 //----------
-Model::~Model() {
+Model::~Model()
+{
 	this->unload();
 
 	delete[] this->tensorArena;
 }
 
 //----------
-void Model::load(unsigned char * data, size_t length) {
+void
+Model::load(unsigned char * data, size_t length)
+{
 	this->unload();
 
 	this->model = ::tflite::GetModel(g_model);
@@ -41,7 +45,9 @@ void Model::load(unsigned char * data, size_t length) {
 }
 
 //---------
-void Model::unload() {
+void
+Model::unload()
+{
 	if(this->model) {
 		delete this->model;
 		this->model = nullptr;
@@ -54,7 +60,9 @@ void Model::unload() {
 }
 
 //----------
-bool Model::isLoaded() const {
+bool
+Model::isLoaded() const
+{
 	if(this->model && this->interpreter) {
 		return true;
 	}
@@ -64,75 +72,103 @@ bool Model::isLoaded() const {
 }
 
 //----------
-float Model::invoke(float inputValue) {
-	float error = -10.0f;
+float *
+Model::getInput()
+{
+	return this->interpreter->input(0)->data.f;
+}
 
+//----------
+float *
+Model::getOutput()
+{
+	return this->interpreter->output(0)->data.f;
+}
+
+//----------
+size_t
+Model::getInputSize() const
+{
+	auto & dims = this->interpreter->input(0)->dims;
+	return dims->data[0] * dims->data[1];
+}
+
+//----------
+size_t
+Model::getOutputSize() const
+{
+	auto & dims = this->interpreter->output(0)->dims;
+	return dims->data[0] * dims->data[1];
+}
+
+//----------
+bool
+Model::checkSize(size_t inputSize, size_t outputSize) const
+{
 	if(!this->isLoaded()) {
-		return error;
+		return false;
 	}
-
-	auto input = this->interpreter->input(0);
 
 	// check the input format is correct
 	{
+		auto input = this->interpreter->input(0);
+
 		if(!input) {
-			return error;
+			return false;
 		}
 
 		// 2D 
 		if(input->dims->size != 2) {
-			return error;
+			return false;
 		}
 
-		// 1x1 size
-		if(input->dims->data[0] != 1) {
-			return error;
-		}
-		if(input->dims->data[1] != 1) {
-			return error;
+		// size
+		if((size_t) (input->dims->data[0] * input->dims->data[1]) != inputSize) {
+			return false;
 		}
 
 		// float type
 		if(input->type != kTfLiteFloat32) {
-			return error;
+			return false;
 		}
 	}
 
-	input->data.f[0] = inputValue;
-
-	// run the model
-	auto status = this->interpreter->Invoke();
-	if(status != kTfLiteOk) {
-		return error;
-	}
-
-	auto output = interpreter->output(0);
-
 	// check output format
 	{
+		auto output = interpreter->output(0);
+
 		if(!output) {
-			return error;
+			return false;
 		}
 
 		// 2D 
 		if(output->dims->size != 2) {
-			return error;
+			return false;
 		}
 
 		// 1x1 size
-		if(output->dims->data[0] != 1) {
-			return error;
-		}
-		if(output->dims->data[1] != 1) {
-			return error;
+		if( (size_t) (output->dims->data[0] * output->dims->data[1]) != outputSize) {
+			return false;
 		}
 
 		// float type
 		if(output->type != kTfLiteFloat32) {
-			return error;
+			return false;
 		}
 	}
 
-	auto value = output->data.f[0];
-	return value;
+	return true;
+}
+
+//----------
+bool
+Model::invoke()
+{
+	// run the model
+	auto status = this->interpreter->Invoke();
+	if(status != kTfLiteOk) {
+		return false;
+	}
+
+	return true;
 }
