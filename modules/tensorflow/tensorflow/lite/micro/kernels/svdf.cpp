@@ -13,6 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
+
+
 #include <math.h>
 
 #include "tensorflow/lite/c/builtin_op_data.h"
@@ -54,10 +56,10 @@ struct OpData {
  */
 static inline void ApplyTimeWeightsBiasAndActivation(
     int batch_size, int memory_size, int num_filters, int num_units, int rank,
-    const float* const __restrict__ weights_time_ptr,
-    const float* const __restrict__ bias_ptr, TfLiteFusedActivation activation,
-    float* const __restrict__ state_ptr, float* const __restrict__ scratch_ptr,
-    float* const __restrict__ output_ptr) {
+    const float* const __restrict  weights_time_ptr,
+    const float* const __restrict  bias_ptr, TfLiteFusedActivation activation,
+    float* const __restrict  state_ptr, float* const __restrict  scratch_ptr,
+    float* const __restrict  output_ptr) {
   // Compute matmul(activation_state, weights_time).
   for (int b = 0; b < batch_size; ++b) {
     // Perform batched vector dot product:

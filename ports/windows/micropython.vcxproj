@@ -68,39 +68,428 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile />
     <Link />
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\dev\micropython\modules\tensorflow;../../modules/tensorflow;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>MODULE_TENSORFLOW_ENABLED=1;MSVC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile />
     <Link />
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\dev\micropython\modules\tensorflow;../../modules/tensorflow;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>MODULE_TENSORFLOW_ENABLED=1;MSVC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile />
     <Link />
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\dev\micropython\modules\tensorflow;../../modules/tensorflow;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>MODULE_TENSORFLOW_ENABLED=1;MSVC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile />
     <Link />
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\dev\micropython\modules\tensorflow;../../modules/tensorflow;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>MODULE_TENSORFLOW_ENABLED=1;MSVC_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="msvc/sources.props" />
   <ItemGroup>
+    <ClCompile Include="..\..\lib\mp-readline\readline.c" />
+    <ClCompile Include="..\..\modules\tensorflow\extern.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\Model.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\module.c" />
+    <ClCompile Include="..\..\modules\tensorflow\sine_model.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\core\api\error_reporter.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\core\api\flatbuffer_conversions.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\core\api\op_resolver.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\core\api\tensor_utils.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\c\common.c" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\quantization_util.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\kernels\kernel_util.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\all_ops_resolver.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\benchmarks\keyword_scrambled_model_data.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\debug_log.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\activations.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\add.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\arg_min_max.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\ceil.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\circular_buffer.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\comparisons.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\concatenation.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\conv.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\depthwise_conv.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\dequantize.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\elementwise.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\ethosu.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\floor.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\fully_connected.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\hard_swish.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\l2norm.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\logical.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\logistic.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\maximum_minimum.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\mul.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\neg.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\pack.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\pad.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\pooling.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\prelu.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\quantize.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\reduce.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\reshape.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\resize_nearest_neighbor.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\round.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\softmax.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\split.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\strided_slice.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\sub.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\svdf.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\tanh.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\unpack.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\memory_helpers.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\memory_planner\greedy_memory_planner.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\memory_planner\linear_memory_planner.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_allocator.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_error_reporter.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_interpreter.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_optional_debug_tools.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_profiler.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_string.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_time.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_utils.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\recording_micro_allocator.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\recording_simple_memory_allocator.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\simple_memory_allocator.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\testing\test_conv_model.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\testing\test_utils.cpp" />
+    <ClCompile Include="..\..\modules\tensorflow\tensorflow\lite\micro\test_helpers.cpp" />
+    <ClCompile Include="..\..\py\argcheck.c" />
+    <ClCompile Include="..\..\py\asmarm.c" />
+    <ClCompile Include="..\..\py\asmbase.c" />
+    <ClCompile Include="..\..\py\asmthumb.c" />
+    <ClCompile Include="..\..\py\asmx64.c" />
+    <ClCompile Include="..\..\py\asmx86.c" />
+    <ClCompile Include="..\..\py\asmxtensa.c" />
+    <ClCompile Include="..\..\py\bc.c" />
+    <ClCompile Include="..\..\py\binary.c" />
+    <ClCompile Include="..\..\py\builtinevex.c" />
+    <ClCompile Include="..\..\py\builtinhelp.c" />
+    <ClCompile Include="..\..\py\builtinimport.c" />
+    <ClCompile Include="..\..\py\compile.c" />
+    <ClCompile Include="..\..\py\emitbc.c" />
+    <ClCompile Include="..\..\py\emitcommon.c" />
+    <ClCompile Include="..\..\py\emitglue.c" />
+    <ClCompile Include="..\..\py\emitinlinethumb.c" />
+    <ClCompile Include="..\..\py\emitinlinextensa.c" />
+    <ClCompile Include="..\..\py\emitnarm.c" />
+    <ClCompile Include="..\..\py\emitnative.c" />
+    <ClCompile Include="..\..\py\emitnthumb.c" />
+    <ClCompile Include="..\..\py\emitnx64.c" />
+    <ClCompile Include="..\..\py\emitnx86.c" />
+    <ClCompile Include="..\..\py\emitnxtensa.c" />
+    <ClCompile Include="..\..\py\emitnxtensawin.c" />
+    <ClCompile Include="..\..\py\formatfloat.c" />
+    <ClCompile Include="..\..\py\frozenmod.c" />
+    <ClCompile Include="..\..\py\gc.c" />
+    <ClCompile Include="..\..\py\lexer.c" />
+    <ClCompile Include="..\..\py\malloc.c" />
+    <ClCompile Include="..\..\py\map.c" />
+    <ClCompile Include="..\..\py\modarray.c" />
+    <ClCompile Include="..\..\py\modbuiltins.c" />
+    <ClCompile Include="..\..\py\modcmath.c" />
+    <ClCompile Include="..\..\py\modcollections.c" />
+    <ClCompile Include="..\..\py\modgc.c" />
+    <ClCompile Include="..\..\py\modio.c" />
+    <ClCompile Include="..\..\py\modmath.c" />
+    <ClCompile Include="..\..\py\modmicropython.c" />
+    <ClCompile Include="..\..\py\modstruct.c" />
+    <ClCompile Include="..\..\py\modsys.c" />
+    <ClCompile Include="..\..\py\modthread.c" />
+    <ClCompile Include="..\..\py\moduerrno.c" />
+    <ClCompile Include="..\..\py\mpprint.c" />
+    <ClCompile Include="..\..\py\mpstate.c" />
+    <ClCompile Include="..\..\py\mpz.c" />
+    <ClCompile Include="..\..\py\nativeglue.c" />
+    <ClCompile Include="..\..\py\nlr.c" />
+    <ClCompile Include="..\..\py\nlrpowerpc.c" />
+    <ClCompile Include="..\..\py\nlrsetjmp.c" />
+    <ClCompile Include="..\..\py\nlrthumb.c" />
+    <ClCompile Include="..\..\py\nlrx64.c" />
+    <ClCompile Include="..\..\py\nlrx86.c" />
+    <ClCompile Include="..\..\py\nlrxtensa.c" />
+    <ClCompile Include="..\..\py\obj.c" />
+    <ClCompile Include="..\..\py\objarray.c" />
+    <ClCompile Include="..\..\py\objattrtuple.c" />
+    <ClCompile Include="..\..\py\objbool.c" />
+    <ClCompile Include="..\..\py\objboundmeth.c" />
+    <ClCompile Include="..\..\py\objcell.c" />
+    <ClCompile Include="..\..\py\objclosure.c" />
+    <ClCompile Include="..\..\py\objcomplex.c" />
+    <ClCompile Include="..\..\py\objdeque.c" />
+    <ClCompile Include="..\..\py\objdict.c" />
+    <ClCompile Include="..\..\py\objenumerate.c" />
+    <ClCompile Include="..\..\py\objexcept.c" />
+    <ClCompile Include="..\..\py\objfilter.c" />
+    <ClCompile Include="..\..\py\objfloat.c" />
+    <ClCompile Include="..\..\py\objfun.c" />
+    <ClCompile Include="..\..\py\objgenerator.c" />
+    <ClCompile Include="..\..\py\objgetitemiter.c" />
+    <ClCompile Include="..\..\py\objint.c" />
+    <ClCompile Include="..\..\py\objint_longlong.c" />
+    <ClCompile Include="..\..\py\objint_mpz.c" />
+    <ClCompile Include="..\..\py\objlist.c" />
+    <ClCompile Include="..\..\py\objmap.c" />
+    <ClCompile Include="..\..\py\objmodule.c" />
+    <ClCompile Include="..\..\py\objnamedtuple.c" />
+    <ClCompile Include="..\..\py\objnone.c" />
+    <ClCompile Include="..\..\py\objobject.c" />
+    <ClCompile Include="..\..\py\objpolyiter.c" />
+    <ClCompile Include="..\..\py\objproperty.c" />
+    <ClCompile Include="..\..\py\objrange.c" />
+    <ClCompile Include="..\..\py\objreversed.c" />
+    <ClCompile Include="..\..\py\objset.c" />
+    <ClCompile Include="..\..\py\objsingleton.c" />
+    <ClCompile Include="..\..\py\objslice.c" />
+    <ClCompile Include="..\..\py\objstr.c" />
+    <ClCompile Include="..\..\py\objstringio.c" />
+    <ClCompile Include="..\..\py\objstrunicode.c" />
+    <ClCompile Include="..\..\py\objtuple.c" />
+    <ClCompile Include="..\..\py\objtype.c" />
+    <ClCompile Include="..\..\py\objzip.c" />
+    <ClCompile Include="..\..\py\opmethods.c" />
+    <ClCompile Include="..\..\py\pairheap.c" />
+    <ClCompile Include="..\..\py\parse.c" />
+    <ClCompile Include="..\..\py\parsenum.c" />
+    <ClCompile Include="..\..\py\parsenumbase.c" />
+    <ClCompile Include="..\..\py\persistentcode.c" />
+    <ClCompile Include="..\..\py\profile.c" />
+    <ClCompile Include="..\..\py\pystack.c" />
+    <ClCompile Include="..\..\py\qstr.c" />
+    <ClCompile Include="..\..\py\reader.c" />
+    <ClCompile Include="..\..\py\repl.c" />
+    <ClCompile Include="..\..\py\ringbuf.c" />
+    <ClCompile Include="..\..\py\runtime.c" />
+    <ClCompile Include="..\..\py\runtime_utils.c" />
+    <ClCompile Include="..\..\py\scheduler.c" />
+    <ClCompile Include="..\..\py\scope.c" />
+    <ClCompile Include="..\..\py\sequence.c" />
+    <ClCompile Include="..\..\py\showbc.c" />
+    <ClCompile Include="..\..\py\smallint.c" />
+    <ClCompile Include="..\..\py\stackctrl.c" />
+    <ClCompile Include="..\..\py\stream.c" />
+    <ClCompile Include="..\..\py\unicode.c" />
     <ClCompile Include="@(PyCoreSource)" />
     <ClCompile Include="@(PyExtModSource)" />
-    <ClCompile Include="$(PyBaseDir)lib\mp-readline\*.c" />
     <ClCompile Include="$(PyBaseDir)lib\utils\gchelper_generic.c" />
-    <ClCompile Include="$(PyBaseDir)ports\windows\*.c" />
-    <ClCompile Include="$(PyBaseDir)ports\windows\msvc\*.c" />
-    <ClCompile Include="$(PyBaseDir)ports\unix\gccollect.c"/>
-    <ClCompile Include="$(PyBaseDir)ports\unix\input.c"/>
-    <ClCompile Include="$(PyBaseDir)ports\unix\main.c"/>
-    <ClCompile Include="$(PyBaseDir)ports\unix\modos.c"/>
-    <ClCompile Include="$(PyBaseDir)ports\unix\modtime.c"/>
+    <ClCompile Include="$(PyBaseDir)ports\unix\gccollect.c" />
+    <ClCompile Include="$(PyBaseDir)ports\unix\input.c" />
+    <ClCompile Include="$(PyBaseDir)ports\unix\main.c" />
+    <ClCompile Include="$(PyBaseDir)ports\unix\modos.c" />
+    <ClCompile Include="$(PyBaseDir)ports\unix\modtime.c" />
     <ClCompile Include="$(PyBaseDir)ports\unix\modmachine.c" />
+    <ClCompile Include="fmode.c" />
+    <ClCompile Include="init.c" />
+    <ClCompile Include="msvc\dirent.c" />
+    <ClCompile Include="msvc\gettimeofday.c" />
+    <ClCompile Include="realpath.c" />
+    <ClCompile Include="sleep.c" />
+    <ClCompile Include="windows_mphal.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\modules\tensorflow\extern.h" />
+    <ClInclude Include="..\..\modules\tensorflow\Model.h" />
+    <ClInclude Include="..\..\modules\tensorflow\sine_model.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\core\api\error_reporter.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\core\api\flatbuffer_conversions.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\core\api\op_resolver.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\core\api\profiler.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\core\api\tensor_utils.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\c\builtin_op_data.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\c\common.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\common.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\compatibility.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\cppmath.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\max.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\min.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\optimized\neon_check.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\quantization_util.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\add.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\arg_min_max.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\binary_function.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\ceil.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\comparisons.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\concatenation.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\conv.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\depthwiseconv_float.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\depthwiseconv_uint8.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\dequantize.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\floor.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\fully_connected.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\hard_swish.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\integer_ops\add.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\integer_ops\conv.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\integer_ops\depthwise_conv.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\integer_ops\fully_connected.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\integer_ops\l2normalization.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\integer_ops\logistic.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\integer_ops\mul.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\integer_ops\pooling.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\integer_ops\tanh.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\l2normalization.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\logistic.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\maximum_minimum.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\mul.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\neg.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\pad.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\pooling.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\prelu.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\process_broadcast_shapes.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\quantize.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\reduce.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\requantize.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\resize_nearest_neighbor.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\round.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\softmax.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\strided_slice.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\sub.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\reference\tanh.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\strided_slice_logic.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\tensor.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\tensor_ctypes.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\internal\types.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\kernel_util.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\op_macros.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\kernels\padding.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\all_ops_resolver.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\benchmarks\keyword_scrambled_model_data.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\compatibility.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\debug_log.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\activation_utils.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\micro_ops.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\kernels\micro_utils.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\memory_helpers.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\memory_planner\greedy_memory_planner.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\memory_planner\linear_memory_planner.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\memory_planner\memory_planner.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_allocator.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_error_reporter.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_interpreter.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_mutable_op_resolver.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_optional_debug_tools.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_op_resolver.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_profiler.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_string.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_time.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\micro_utils.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\recording_micro_allocator.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\recording_micro_interpreter.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\recording_simple_memory_allocator.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\simple_memory_allocator.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\testing\micro_test.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\testing\test_conv_model.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\testing\test_utils.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\micro\test_helpers.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\schema\schema_generated.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\string_type.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\string_util.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\type_to_tflitetype.h" />
+    <ClInclude Include="..\..\modules\tensorflow\tensorflow\lite\version.h" />
+    <ClInclude Include="..\..\py\asmarm.h" />
+    <ClInclude Include="..\..\py\asmbase.h" />
+    <ClInclude Include="..\..\py\asmthumb.h" />
+    <ClInclude Include="..\..\py\asmx64.h" />
+    <ClInclude Include="..\..\py\asmx86.h" />
+    <ClInclude Include="..\..\py\asmxtensa.h" />
+    <ClInclude Include="..\..\py\bc.h" />
+    <ClInclude Include="..\..\py\bc0.h" />
+    <ClInclude Include="..\..\py\binary.h" />
+    <ClInclude Include="..\..\py\builtin.h" />
+    <ClInclude Include="..\..\py\compile.h" />
+    <ClInclude Include="..\..\py\dynruntime.h" />
+    <ClInclude Include="..\..\py\emit.h" />
+    <ClInclude Include="..\..\py\emitglue.h" />
+    <ClInclude Include="..\..\py\formatfloat.h" />
+    <ClInclude Include="..\..\py\frozenmod.h" />
+    <ClInclude Include="..\..\py\gc.h" />
+    <ClInclude Include="..\..\py\grammar.h" />
+    <ClInclude Include="..\..\py\lexer.h" />
+    <ClInclude Include="..\..\py\misc.h" />
+    <ClInclude Include="..\..\py\mpconfig.h" />
+    <ClInclude Include="..\..\py\mperrno.h" />
+    <ClInclude Include="..\..\py\mphal.h" />
+    <ClInclude Include="..\..\py\mpprint.h" />
+    <ClInclude Include="..\..\py\mpstate.h" />
+    <ClInclude Include="..\..\py\mpthread.h" />
+    <ClInclude Include="..\..\py\mpz.h" />
+    <ClInclude Include="..\..\py\nativeglue.h" />
+    <ClInclude Include="..\..\py\nlr.h" />
+    <ClInclude Include="..\..\py\obj.h" />
+    <ClInclude Include="..\..\py\objarray.h" />
+    <ClInclude Include="..\..\py\objexcept.h" />
+    <ClInclude Include="..\..\py\objfun.h" />
+    <ClInclude Include="..\..\py\objgenerator.h" />
+    <ClInclude Include="..\..\py\objint.h" />
+    <ClInclude Include="..\..\py\objlist.h" />
+    <ClInclude Include="..\..\py\objmodule.h" />
+    <ClInclude Include="..\..\py\objnamedtuple.h" />
+    <ClInclude Include="..\..\py\objstr.h" />
+    <ClInclude Include="..\..\py\objstringio.h" />
+    <ClInclude Include="..\..\py\objtuple.h" />
+    <ClInclude Include="..\..\py\objtype.h" />
+    <ClInclude Include="..\..\py\pairheap.h" />
+    <ClInclude Include="..\..\py\parse.h" />
+    <ClInclude Include="..\..\py\parsenum.h" />
+    <ClInclude Include="..\..\py\parsenumbase.h" />
+    <ClInclude Include="..\..\py\persistentcode.h" />
+    <ClInclude Include="..\..\py\profile.h" />
+    <ClInclude Include="..\..\py\pystack.h" />
+    <ClInclude Include="..\..\py\qstr.h" />
+    <ClInclude Include="..\..\py\qstrdefs.h" />
+    <ClInclude Include="..\..\py\reader.h" />
+    <ClInclude Include="..\..\py\repl.h" />
+    <ClInclude Include="..\..\py\ringbuf.h" />
+    <ClInclude Include="..\..\py\runtime.h" />
+    <ClInclude Include="..\..\py\runtime0.h" />
+    <ClInclude Include="..\..\py\scope.h" />
+    <ClInclude Include="..\..\py\smallint.h" />
+    <ClInclude Include="..\..\py\stackctrl.h" />
+    <ClInclude Include="..\..\py\stream.h" />
     <ClInclude Include="@(PyCoreInclude)" />
     <ClInclude Include="@(PyExtModInclude)" />
-    <ClInclude Include="$(PyBaseDir)ports\windows\*.h" />
-    <ClInclude Include="$(PyBaseDir)ports\windows\msvc\*.h" />
+    <ClInclude Include="fmode.h" />
+    <ClInclude Include="init.h" />
+    <ClInclude Include="mpconfigport.h" />
+    <ClInclude Include="msvc\dirent.h" />
+    <ClInclude Include="msvc\unistd.h" />
+    <ClInclude Include="realpath.h" />
+    <ClInclude Include="sleep.h" />
+    <ClInclude Include="windows_mphal.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\modules\tensorflow\micropython.mk" />
+    <None Include="..\..\py\dynruntime.mk" />
+    <None Include="..\..\py\makecompresseddata.py" />
+    <None Include="..\..\py\makemoduledefs.py" />
+    <None Include="..\..\py\makeqstrdata.py" />
+    <None Include="..\..\py\makeqstrdefs.py" />
+    <None Include="..\..\py\makeversionhdr.py" />
+    <None Include="..\..\py\mkenv.mk" />
+    <None Include="..\..\py\mkrules.mk" />
+    <None Include="..\..\py\py.mk" />
+    <None Include="test_run.py" />
   </ItemGroup>
   <Import Project="msvc/genhdr.targets" />
   <Import Project="$(CustomPropsFile)" Condition="exists('$(CustomPropsFile)')" />

@@ -5,6 +5,8 @@
 #include "tensorflow/lite/schema/schema_generated.h"
 #include "tensorflow/lite/version.h"
 
+#include <memory>
+
 class Model {
 public:
 	Model(size_t tensorArenaSize = 2 * 1024);
@@ -14,6 +16,8 @@ public:
 	void unload();
 	
 	bool isLoaded() const;
+
+	void* getHeapArea() const;
 
 	float * getInput();
 	float * getOutput();
@@ -26,7 +30,9 @@ public:
 
 protected:
 	size_t tensorArenaSize;
-	uint8_t * tensorArena;
+	
+	void * heapArea;
+	uint8_t * tensorArena = nullptr;
 
 	const tflite::Model* model = nullptr;
 	tflite::MicroInterpreter * interpreter = nullptr;

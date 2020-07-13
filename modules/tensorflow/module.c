@@ -26,7 +26,8 @@ typedef struct _model_t
 	// base represents some basic information, like type
 	mp_obj_base_t base;
 	// a member created by us
-	model_handle model;
+	model_ptr model;
+	unsigned char* heap_area;
 } model_t;
 
 //----------
@@ -41,6 +42,7 @@ mp_obj_t mp_model_make_new(const mp_obj_type_t * type,
 	model_t * self = m_new_obj(model_t);
 	self->base.type = &mp_model_type;
 	self->model = create_model();
+	self->heap_area = model_get_heap_area(self->model);
 	return MP_OBJ_FROM_PTR(self);
 }
 
@@ -83,6 +85,11 @@ MP_DEFINE_CONST_FUN_OBJ_1(mp_model_unload_obj,
 STATIC mp_obj_t mp_model_get_input_size(mp_obj_t self_in)
 {
 	model_t *self = MP_OBJ_TO_PTR(self_in);
+
+	if(!model_is_loaded(self->model)) {
+		nlr_raise(mp_obj_new_exception_msg(&mp_type_Exception, MP_ERROR_TEXT("Model is not loaded")));
+	}
+
 	size_t result = model_get_input_size(self->model);
 	return mp_obj_new_int((int) result);
 }
@@ -93,6 +100,11 @@ MP_DEFINE_CONST_FUN_OBJ_1(mp_model_get_input_size_obj,
 STATIC mp_obj_t mp_model_get_output_size(mp_obj_t self_in)
 {
 	model_t *self = MP_OBJ_TO_PTR(self_in);
+
+	if(!model_is_loaded(self->model)) {
+		nlr_raise(mp_obj_new_exception_msg(&mp_type_Exception, MP_ERROR_TEXT("Model is not loaded")));
+	}
+
 	size_t result = model_get_output_size(self->model);
 	return mp_obj_new_int((int) result);
 }
@@ -104,8 +116,14 @@ STATIC mp_obj_t mp_model_invoke(mp_obj_t self_in, mp_obj_t input_obj)
 {
 	model_t *self = MP_OBJ_TO_PTR(self_in);
 
+	// check model is loaded
 	if(!model_is_loaded(self->model)) {
 		nlr_raise(mp_obj_new_exception_msg(&mp_type_Exception, MP_ERROR_TEXT("Model is not loaded")));
+	}
+
+	// check input type
+	if(mp_obj_get_type(input_obj) != &mp_type_list) {
+		nlr_raise(mp_obj_new_exception_msg(&mp_type_ValueError, MP_ERROR_TEXT("Input must be a list")));
 	}
 
 	size_t inputLength;
@@ -123,13 +141,14 @@ STATIC mp_obj_t mp_model_invoke(mp_obj_t self_in, mp_obj_t input_obj)
 
 	// build output
 	size_t outputLength = model_get_output_size(self->model);
-	mp_obj_t outputItems[outputLength];
+	mp_obj_t* outputItems = m_new(mp_obj_t, outputLength);
 	float * outputTensorData = model_get_output(self->model);
 	for(size_t i=0; i<outputLength; i++) {
 		outputItems[i] = mp_obj_new_float(outputTensorData[i]);
 	}
 
 	return mp_obj_new_list(outputLength, outputItems);
+	m_del(mp_obj_t, outputItems, outputLength);
 }
 MP_DEFINE_CONST_FUN_OBJ_2(mp_model_invoke_obj,
 	mp_model_invoke);
@@ -163,7 +182,7 @@ const mp_obj_type_t mp_model_type = {
 
 
 //----------
-STATIC mp_obj_t mp_get_sine_model()
+STATIC mp_obj_t mp_get_sine_model(mp_obj_t dummy)
 {
 	size_t dataLength;
 	const char * data = get_sine_model(&dataLength);
@@ -177,7 +196,7 @@ MP_DEFINE_CONST_FUN_OBJ_0(mp_get_sine_model_obj,
 
 STATIC const mp_rom_map_elem_t tensorflow_module_globals_table[] = {
 	{ MP_ROM_QSTR(MP_QSTR__name__), MP_ROM_QSTR(MP_QSTR_tensorflow)},
-	{ MP_ROM_QSTR(MP_QSTR_testInvoke), MP_ROM_PTR(&tf_invoke_obj)},
+	{ MP_ROM_QSTR(MP_QSTR_test_invoke), MP_ROM_PTR(&tf_invoke_obj)},
 	{ MP_ROM_QSTR(MP_QSTR_get_sine_model), MP_ROM_PTR(&mp_get_sine_model_obj)},
 	{ MP_ROM_QSTR(MP_QSTR_Model), MP_ROM_PTR(&mp_model_type)}
 };
