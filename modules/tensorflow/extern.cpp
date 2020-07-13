@@ -10,6 +10,16 @@ extern "C" {
 
 #include <vector>
 
+#include <stdarg.h>
+int mp_vprintf(const mp_print_t* print, const char* fmt, va_list args);
+int DEBUG_printf(const char* fmt, ...) {
+	va_list ap;
+	va_start(ap, fmt);
+	int ret = mp_vprintf(MICROPY_DEBUG_PRINTER, fmt, ap);
+	va_end(ap);
+	return ret;
+}
+
 Model * testModel;
 
 float testInvoke(float input) {

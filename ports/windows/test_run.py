@@ -8,4 +8,4 @@ for i in range(100):
 	for j in range(100):
 		model.invoke([0.])
 	print(i)
-	#gc.collect()
+	gc.collect()

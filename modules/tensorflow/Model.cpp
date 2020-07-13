@@ -9,11 +9,13 @@ tflite::ErrorReporter* error_reporter = &micro_error_reporter;
 tflite::AllOpsResolver resolver;
 
 const size_t alignment = 16;
+uint8_t heapAreaGlobal[2 * 1024 + alignment];
 
 //----------
 Model::Model(size_t tensorArenaSize)
 {
-	this->heapArea = malloc(tensorArenaSize + alignment);
+	//this->heapArea = malloc(tensorArenaSize + alignment);
+	this->heapArea = heapAreaGlobal;
 	this->tensorArena = (uint8_t*)this->heapArea;// MP_ALIGN(this->heapArea, alignment);
 
 	this->tensorArenaSize = tensorArenaSize;
@@ -24,7 +26,7 @@ Model::~Model()
 {
 	this->unload();
 
-	free(this->heapArea);
+	//free(this->heapArea);
 }
 
 //----------
