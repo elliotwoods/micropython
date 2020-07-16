@@ -147,8 +147,8 @@ STATIC mp_obj_t mp_model_invoke(mp_obj_t self_in, mp_obj_t input_obj)
 		outputItems[i] = mp_obj_new_float(outputTensorData[i]);
 	}
 
-	return mp_obj_new_list(outputLength, outputItems);
 	m_del(mp_obj_t, outputItems, outputLength);
+	return mp_obj_new_list(outputLength, outputItems);
 }
 MP_DEFINE_CONST_FUN_OBJ_2(mp_model_invoke_obj,
 	mp_model_invoke);

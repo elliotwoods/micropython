@@ -14,9 +14,12 @@ uint8_t heapAreaGlobal[2 * 1024 + alignment];
 //----------
 Model::Model(size_t tensorArenaSize)
 {
-	//this->heapArea = malloc(tensorArenaSize + alignment);
-	this->heapArea = heapAreaGlobal;
-	this->tensorArena = (uint8_t*)this->heapArea;// MP_ALIGN(this->heapArea, alignment);
+	this->heapArea = malloc(tensorArenaSize + alignment);
+	{
+		auto tensorAreaAligned = ((uintptr_t)this->heapArea) + alignment;
+		tensorAreaAligned -= tensorAreaAligned % alignment;
+		this->tensorArena = (uint8_t*)tensorAreaAligned;
+	}
 
 	this->tensorArenaSize = tensorArenaSize;
 }
@@ -35,7 +38,8 @@ Model::load(const char * data, size_t length)
 {
 	this->unload();
 
-	this->model = ::tflite::GetModel(data);
+	this->modelString.assign(data, length);
+	this->model = ::tflite::GetModel(this->modelString.c_str());
 	if (this->model->version() != TFLITE_SCHEMA_VERSION) {
 	TF_LITE_REPORT_ERROR(error_reporter,
 		"Model provided is schema version %d not equal "
@@ -65,7 +69,7 @@ Model::unload()
 	}
 
 	if(this->model) {
-		delete this->model;
+		this->modelString.clear();
 		this->model = nullptr;
 	}
 }

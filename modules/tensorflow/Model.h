@@ -34,6 +34,9 @@ protected:
 	void * heapArea;
 	uint8_t * tensorArena = nullptr;
 
+	// note that we don't own model, it's a type cast pointer
 	const tflite::Model* model = nullptr;
 	tflite::MicroInterpreter * interpreter = nullptr;
+	
+	std::string modelString;
 };
