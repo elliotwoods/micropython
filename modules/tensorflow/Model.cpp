@@ -1,16 +1,26 @@
 #include "Model.h"
 #include "sine_model.h"
 
+#include <cstdlib>
+
 tflite::MicroErrorReporter micro_error_reporter;
 tflite::ErrorReporter* error_reporter = &micro_error_reporter;
 
 tflite::AllOpsResolver resolver;
 
+const size_t alignment = 16;
+
 //----------
 Model::Model(size_t tensorArenaSize)
-: tensorArenaSize(tensorArenaSize)
 {
-	this->tensorArena = new uint8_t[tensorArenaSize];
+	this->heapArea = malloc(tensorArenaSize + alignment);
+	{
+		auto tensorAreaAligned = ((uintptr_t)this->heapArea) + alignment;
+		tensorAreaAligned -= tensorAreaAligned % alignment;
+		this->tensorArena = (uint8_t*)tensorAreaAligned;
+	}
+
+	this->tensorArenaSize = tensorArenaSize;
 }
 
 //----------
@@ -18,7 +28,7 @@ Model::~Model()
 {
 	this->unload();
 
-	delete[] this->tensorArena;
+	free(this->heapArea);
 }
 
 //----------
@@ -27,7 +37,8 @@ Model::load(const char * data, size_t length)
 {
 	this->unload();
 
-	this->model = ::tflite::GetModel(data);
+	this->modelString.assign(data, length);
+	this->model = ::tflite::GetModel(this->modelString.c_str());
 	if (this->model->version() != TFLITE_SCHEMA_VERSION) {
 	TF_LITE_REPORT_ERROR(error_reporter,
 		"Model provided is schema version %d not equal "
@@ -41,21 +52,24 @@ Model::load(const char * data, size_t length)
 		, this->tensorArenaSize
 		, error_reporter);
 	
-	this->interpreter->AllocateTensors();
+	if(this->interpreter->AllocateTensors() != kTfLiteOk) {
+		TF_LITE_REPORT_ERROR(error_reporter,
+			"Cannot allocate tensors");
+	}
 }
 
 //---------
 void
 Model::unload()
 {
-	if(this->model) {
-		delete this->model;
-		this->model = nullptr;
-	}
-
 	if(this->interpreter) {
 		delete this->interpreter;
 		this->interpreter = nullptr;
+	}
+
+	if(this->model) {
+		this->modelString.clear();
+		this->model = nullptr;
 	}
 }
 
@@ -69,6 +83,13 @@ Model::isLoaded() const
 	else {
 		return false;
 	}
+}
+
+//----------
+void *
+Model::getHeapArea() const
+{
+	return this->heapArea;
 }
 
 //----------

@@ -26,7 +26,8 @@ typedef struct _model_t
 	// base represents some basic information, like type
 	mp_obj_base_t base;
 	// a member created by us
-	model_handle model;
+	model_ptr model;
+	unsigned char* heap_area;
 } model_t;
 
 //----------
@@ -41,6 +42,7 @@ mp_obj_t mp_model_make_new(const mp_obj_type_t * type,
 	model_t * self = m_new_obj(model_t);
 	self->base.type = &mp_model_type;
 	self->model = create_model();
+	self->heap_area = model_get_heap_area(self->model);
 	return MP_OBJ_FROM_PTR(self);
 }
 
@@ -145,8 +147,8 @@ STATIC mp_obj_t mp_model_invoke(mp_obj_t self_in, mp_obj_t input_obj)
 		outputItems[i] = mp_obj_new_float(outputTensorData[i]);
 	}
 
-	return mp_obj_new_list(outputLength, outputItems);
 	m_del(mp_obj_t, outputItems, outputLength);
+	return mp_obj_new_list(outputLength, outputItems);
 }
 MP_DEFINE_CONST_FUN_OBJ_2(mp_model_invoke_obj,
 	mp_model_invoke);
@@ -180,7 +182,7 @@ const mp_obj_type_t mp_model_type = {
 
 
 //----------
-STATIC mp_obj_t mp_get_sine_model()
+STATIC mp_obj_t mp_get_sine_model(mp_obj_t dummy)
 {
 	size_t dataLength;
 	const char * data = get_sine_model(&dataLength);
