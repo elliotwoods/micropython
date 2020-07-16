@@ -182,7 +182,7 @@ const mp_obj_type_t mp_model_type = {
 
 
 //----------
-STATIC mp_obj_t mp_get_sine_model(mp_obj_t dummy)
+STATIC mp_obj_t mp_get_sine_model()
 {
 	size_t dataLength;
 	const char * data = get_sine_model(&dataLength);
