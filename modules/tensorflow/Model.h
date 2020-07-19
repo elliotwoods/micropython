@@ -30,13 +30,14 @@ public:
 
 protected:
 	size_t tensorArenaSize;
-	
+	size_t heapAreaSize;
+
 	void * heapArea;
-	uint8_t * tensorArena = nullptr;
 
 	// note that we don't own model, it's a type cast pointer
 	const tflite::Model* model = nullptr;
 	tflite::MicroInterpreter * interpreter = nullptr;
 	
-	std::string modelString;
+	char* modelString = nullptr;
+	size_t modelStringLength = 0;
 };

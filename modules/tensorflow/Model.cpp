@@ -1,6 +1,10 @@
 #include "Model.h"
 #include "sine_model.h"
 
+extern "C" {
+	#include "py/runtime.h"
+}
+
 #include <cstdlib>
 
 tflite::MicroErrorReporter micro_error_reporter;
@@ -13,21 +17,15 @@ const size_t alignment = 16;
 //----------
 Model::Model(size_t tensorArenaSize)
 {
-	this->heapArea = malloc(tensorArenaSize + alignment);
-	{
-		auto tensorAreaAligned = ((uintptr_t)this->heapArea) + alignment;
-		tensorAreaAligned -= tensorAreaAligned % alignment;
-		this->tensorArena = (uint8_t*)tensorAreaAligned;
-	}
-
 	this->tensorArenaSize = tensorArenaSize;
+	this->heapAreaSize = tensorArenaSize + alignment;
+	this->heapArea = malloc(heapAreaSize);
 }
 
 //----------
 Model::~Model()
 {
 	this->unload();
-
 	free(this->heapArea);
 }
 
@@ -37,8 +35,11 @@ Model::load(const char * data, size_t length)
 {
 	this->unload();
 
-	this->modelString.assign(data, length);
-	this->model = ::tflite::GetModel(this->modelString.c_str());
+	this->modelString = new char[length];
+	memcpy(this->modelString, data, length);
+	this->modelStringLength = length;
+
+	this->model = ::tflite::GetModel(this->modelString);
 	if (this->model->version() != TFLITE_SCHEMA_VERSION) {
 	TF_LITE_REPORT_ERROR(error_reporter,
 		"Model provided is schema version %d not equal "
@@ -48,7 +49,7 @@ Model::load(const char * data, size_t length)
 
 	this->interpreter = new tflite::MicroInterpreter(model
 		, resolver
-		, this->tensorArena
+		, (uint8_t*)MP_ALIGN(this->heapArea, alignment)
 		, this->tensorArenaSize
 		, error_reporter);
 	
@@ -68,7 +69,10 @@ Model::unload()
 	}
 
 	if(this->model) {
-		this->modelString.clear();
+		delete[] this->modelString;
+
+		this->modelString = nullptr;
+		this->modelStringLength = 0;
 		this->model = nullptr;
 	}
 }

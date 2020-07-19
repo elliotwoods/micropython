@@ -47,8 +47,12 @@ model_ptr create_model() {
 	return new Model();
 }
 
+model_ptr create_model_with_heap_size(size_t heapSize) {
+	return new Model(heapSize);
+}
+
 void delete_model(model_ptr model) {
-	m_del_obj(Model, model);
+	delete model;
 }
 
 void model_load(model_ptr model, const char * data, size_t length) {

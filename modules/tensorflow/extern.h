@@ -11,6 +11,8 @@ EXTERNC float testInvoke(float);
 typedef void * model_ptr;
 
 EXTERNC model_ptr create_model();
+EXTERNC model_ptr create_model_with_heap_size(size_t heapSize);
+
 EXTERNC void delete_model(model_ptr);
 
 EXTERNC void model_load(model_ptr, const char *, size_t);

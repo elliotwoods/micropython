@@ -37,11 +37,18 @@ mp_obj_t mp_model_make_new(const mp_obj_type_t * type,
 	const mp_obj_t * args)
 {
 	// check argument count
-	mp_arg_check_num(n_args, n_kw, 0, 0, true);
+	mp_arg_check_num(n_args, n_kw, 0, 1, true);
 
 	model_t * self = m_new_obj(model_t);
 	self->base.type = &mp_model_type;
-	self->model = create_model();
+
+	if (n_args == 0) {
+		self->model = create_model();
+	}
+	else {
+		size_t heapAreaSize = mp_obj_get_int(args[0]);
+		self->model = create_model_with_heap_size(heapAreaSize);
+	}
 	self->heap_area = model_get_heap_area(self->model);
 	return MP_OBJ_FROM_PTR(self);
 }
@@ -147,7 +154,6 @@ STATIC mp_obj_t mp_model_invoke(mp_obj_t self_in, mp_obj_t input_obj)
 		outputItems[i] = mp_obj_new_float(outputTensorData[i]);
 	}
 
-	m_del(mp_obj_t, outputItems, outputLength);
 	return mp_obj_new_list(outputLength, outputItems);
 }
 MP_DEFINE_CONST_FUN_OBJ_2(mp_model_invoke_obj,
