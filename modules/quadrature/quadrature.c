@@ -117,19 +117,18 @@ STATIC mp_obj_t quadrature_value(mp_obj_t self_in) {
 MP_DEFINE_CONST_FUN_OBJ_1(quadrature_value_obj,
 	quadrature_value);
 
-static void quadrature_reset(mp_obj_t self_in) {
+STATIC mp_obj_t quadrature_clear(mp_obj_t self_in) {
 	quadrature_encoder_t *self = MP_OBJ_TO_PTR(self_in);
 	pcnt_counter_clear(self->pcntUnit);
+	return mp_const_none;
 }
-MP_DEFINE_CONST_FUN_OBJ_0(quadrature_reset_obj,
-	quadrature_reset);
+MP_DEFINE_CONST_FUN_OBJ_1(quadrature_clear_obj,
+	quadrature_clear);
 
 // creating the table of global members
 STATIC const mp_rom_map_elem_t quadrature_encoder_locals_dict_table[] = {
-	{
-		MP_ROM_QSTR(MP_QSTR_value), MP_ROM_PTR(&quadrature_value_obj)
-		,MP_ROM_QSTR(MP_QSTR_reset), MP_ROM_PTR(&quadrature_reset_obj)
-	}
+	{ MP_ROM_QSTR(MP_QSTR_value), MP_ROM_PTR(&quadrature_value_obj) }
+	, { MP_ROM_QSTR(MP_QSTR_clear), MP_ROM_PTR(&quadrature_clear_obj) }
 };
 
 STATIC MP_DEFINE_CONST_DICT(quadrature_encoder_locals_dict,
